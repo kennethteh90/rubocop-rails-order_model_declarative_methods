@@ -1,4 +1,6 @@
 Rails/ModelCallback:
   Description: 'TODO'
   Enabled: true
+  Include:
+    - app/models/**/*.rb
 
