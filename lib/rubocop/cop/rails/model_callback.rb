@@ -58,15 +58,16 @@ module RuboCop
 
         def autocorrect(body)
           targets = target_methods(body)
-          sorted  = sort_callbacks(targets)
-          targets.push(nil)
+          sorteds = sort_callbacks(targets)
+          sorteds.push(nil)
 
           lambda do |corrector|
-            targets.each_cons(2).with_index do |(target, next_target), idx|
+            sorteds.each_cons(2).with_index do |(sorted, next_sorted), idx|
+              target = targets[idx]
               expr = target.loc.expression
               corrector.replace(
                 expr,
-                sorted[idx].loc.expression.source.to_s
+                sorted.loc.expression.source.to_s
               )
 
               lnum = expr.last_line
@@ -79,8 +80,8 @@ module RuboCop
                 lnum += 1
               end
 
-              if next_target
-                corrector.insert_after(expr, "\n") if method_type(target) != method_type(next_target)
+              if next_sorted
+                corrector.insert_after(expr, "\n") if method_type(sorted) != method_type(next_sorted)
               else
                 corrector.insert_after(expr, "\n")
               end
