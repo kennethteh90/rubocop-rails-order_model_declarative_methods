@@ -50,21 +50,24 @@ module RuboCop
           return unless body
           return unless body.begin_type?
 
-          callbacks = body.children.compact.select{|x| x.send_type? && methods.include?(x.method_name)}
+          callbacks = body.children.compact.select{|x| x.send_type? && target_method_names.include?(x.method_name)}
           return if callbacks == sort_callbacks(callbacks)
 
           add_offense(callbacks.first, :expression)
         end
 
+        def autocorrect(node)
+        end
+
 
         private
 
-        def methods
+        def target_method_names
           [Associations, Callbacks, Others].flatten
         end
 
         def sort_callbacks(callbacks)
-          callbacks.sort_by{|x| methods.find_index(x.method_name)}
+          callbacks.sort_by{|x| target_method_names.find_index(x.method_name)}
         end
       end
     end
