@@ -58,14 +58,33 @@ module RuboCop
 
         def autocorrect(body)
           targets = target_methods(body)
-          sorted  = sort_callbacks(targets)
+          sorteds = sort_callbacks(targets)
+          sorteds.push(nil)
 
           lambda do |corrector|
-            targets.each.with_index do |t, i|
+            sorteds.each_cons(2).with_index do |(sorted, next_sorted), idx|
+              target = targets[idx]
+              expr = target.loc.expression
               corrector.replace(
-                t.loc.expression,
-                (sorted[i].loc.expression.source).to_s
+                expr,
+                sorted.loc.expression.source.to_s
               )
+
+              lnum = expr.last_line
+              loop do
+                l = processed_source.lines[lnum]
+                break if l !~ /\A[[:space:]]*\z/ # blank
+
+                range = source_range(expr.source_buffer, lnum+1, 0, l.size+1)
+                corrector.remove(range)
+                lnum += 1
+              end
+
+              if next_sorted
+                corrector.insert_after(expr, "\n") if method_type(sorted) != method_type(next_sorted)
+              else
+                corrector.insert_after(expr, "\n")
+              end
             end
           end
         end
@@ -86,6 +105,18 @@ module RuboCop
         # TODO: Rename
         def sort_callbacks(callbacks)
           callbacks.sort_by{|x| target_method_names.find_index(x.method_name)}
+        end
+
+        def method_type(target)
+          if Associations.include?(target.method_name)
+            :association
+          elsif Callbacks.include?(target.method_name)
+            :callback
+          elsif Others.include?(target.method_name)
+            :other
+          else
+            raise "Unreachable code"
+          end
         end
       end
     end
