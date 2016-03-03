@@ -32,5 +32,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rubocop-rails-order_model_declarative_methods.
+Bug reports and pull requests are welcome on GitHub at https://github.com/pocke/rubocop-rails-order_model_declarative_methods.
 
