@@ -50,10 +50,10 @@ module RuboCop
           return unless body
           return unless body.begin_type?
 
-          callbacks = body.children.compact.select{|x| x.send_type? && target_method_names.include?(x.method_name)}
-          return if callbacks == sort_callbacks(callbacks)
+          target = target_methods(body)
+          return if target == sort_callbacks(target)
 
-          add_offense(callbacks.first, :expression)
+          add_offense(target.first, :expression)
         end
 
         def autocorrect(node)
@@ -61,6 +61,12 @@ module RuboCop
 
 
         private
+
+        def target_methods(body)
+          body.children.compact.select do |x|
+            x.send_type? && target_method_names.include?(x.method_name)
+          end
+        end
 
         def target_method_names
           [Associations, Callbacks, Others].flatten
