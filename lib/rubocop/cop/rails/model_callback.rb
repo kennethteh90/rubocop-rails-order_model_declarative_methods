@@ -50,13 +50,24 @@ module RuboCop
           return unless body
           return unless body.begin_type?
 
-          target = target_methods(body)
-          return if target == sort_callbacks(target)
+          targets = target_methods(body)
+          return if targets == sort_callbacks(targets)
 
-          add_offense(target.first, :expression)
+          add_offense(body, :expression)
         end
 
-        def autocorrect(node)
+        def autocorrect(body)
+          targets = target_methods(body)
+          sorted  = sort_callbacks(targets)
+
+          lambda do |corrector|
+            targets.each.with_index do |t, i|
+              corrector.replace(
+                t.loc.expression,
+                (sorted[i].loc.expression.source).to_s
+              )
+            end
+          end
         end
 
 
@@ -72,6 +83,7 @@ module RuboCop
           [Associations, Callbacks, Others].flatten
         end
 
+        # TODO: Rename
         def sort_callbacks(callbacks)
           callbacks.sort_by{|x| target_method_names.find_index(x.method_name)}
         end
