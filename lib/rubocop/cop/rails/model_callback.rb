@@ -34,7 +34,10 @@ module RuboCop
 
         def on_class(node)
           _name, _superclass, body = *node
-          callbacks = body.children.select{|x| x.send_type? && MethodNames.include?(x.method_name)}
+          return unless body
+          return unless body.begin_type?
+
+          callbacks = body.children.compact.select{|x| x.send_type? && MethodNames.include?(x.method_name)}
           return if callbacks == sort_callbacks(callbacks)
 
           add_offense(callbacks.first, :expression)
