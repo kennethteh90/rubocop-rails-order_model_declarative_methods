@@ -11,7 +11,7 @@ describe RuboCop::Cop::Rails::ModelCallback do
       'end',
     ])
     expect(cop.messages).to eq ['not sorted']
-    # expect(cop.highlights).to eq([''])
+    # expect(cop.highlights).to eq(['']) # TODO
     expect(cop.offenses.map(&:line).sort).to eq([2])
   end
 end
