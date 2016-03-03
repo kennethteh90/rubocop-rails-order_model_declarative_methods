@@ -104,7 +104,8 @@ module RuboCop
 
         # TODO: Rename
         def sort_callbacks(callbacks)
-          callbacks.sort_by{|x| target_method_names.find_index(x.method_name)}
+          i = 0
+          callbacks.sort_by{|x| [target_method_names.find_index(x.method_name), i+=1]}
         end
 
         def method_type(target)
