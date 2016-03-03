@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RuboCop::Cop::Rails::ModelCallback do
+describe RuboCop::Cop::Rails::OrderModelDeclarativeMethods do
   subject(:cop) { described_class.new }
 
   it '' do

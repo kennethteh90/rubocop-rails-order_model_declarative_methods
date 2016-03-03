@@ -1,4 +1,4 @@
-Rails/ModelCallback:
+Rails/OrderModelDeclarativeMethods:
   Description: 'TODO'
   Enabled: true
   Include:

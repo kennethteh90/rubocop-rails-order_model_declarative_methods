@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rubocop/rails/model_callback/version'
+require 'rubocop/rails/order_model_declarative_methods/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rubocop-rails-model_callback"
-  spec.version       = Rubocop::Rails::ModelCallback::VERSION
+  spec.name          = "rubocop-rails-order_model_declarative_methods"
+  spec.version       = Rubocop::Rails::OrderModelDeclarativeMethods::VERSION
   spec.authors       = ["Masataka Kuwabara"]
   spec.email         = ["p.ck.t22@gmail.com"]
 

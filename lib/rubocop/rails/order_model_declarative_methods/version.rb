@@ -1,6 +1,6 @@
 module Rubocop
   module Rails
-    module ModelCallback
+    module OrderModelDeclarativeMethods
       VERSION = "0.1.0"
     end
   end

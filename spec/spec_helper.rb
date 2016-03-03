@@ -24,4 +24,4 @@ end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'rubocop-rails-model_callback'
+require 'rubocop-rails-order_model_declarative_methods'

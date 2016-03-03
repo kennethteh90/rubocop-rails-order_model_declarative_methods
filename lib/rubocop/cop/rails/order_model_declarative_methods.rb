@@ -3,7 +3,7 @@ require 'pry'
 module RuboCop
   module Cop
     module Rails
-      class ModelCallback < Cop
+      class OrderModelDeclarativeMethods < Cop
         MSG = "not sorted"
 
         Associations = %i[
