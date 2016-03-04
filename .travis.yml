@@ -1,0 +1,18 @@
+language: ruby
+
+rvm:
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
+  - head
+
+cache: bundler
+bundler_args: --jobs=4 --retry=3 --deployment
+sudo: false
+
+
+env:
+  - RUBOCOP_PATH=~/rubocop
+
+before_script:
+  - 'git clone https://github.com/bbatsov/rubocop ~/rubocop'
