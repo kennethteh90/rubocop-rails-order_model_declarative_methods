@@ -7,7 +7,7 @@ rvm:
   - head
 
 cache: bundler
-bundler_args: --jobs=4 --retry=3 --deployment
+bundler_args: --jobs=4 --retry=3
 sudo: false
 
 
@@ -15,4 +15,4 @@ env:
   - RUBOCOP_PATH=~/rubocop
 
 before_script:
-  - 'git clone https://github.com/bbatsov/rubocop ~/rubocop'
+  - 'git clone --depth 1 https://github.com/bbatsov/rubocop ~/rubocop'
