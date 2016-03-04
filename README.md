@@ -1,5 +1,6 @@
 # Rubocop::Rails::OrderModelDeclarativeMethods
 
+[![Gem Version](https://badge.fury.io/rb/rubocop-rails-order_model_declarative_methods.svg)](https://badge.fury.io/rb/rubocop-rails-order_model_declarative_methods)
 [![Build Status](https://travis-ci.org/pocke/rubocop-rails-order_model_declarative_methods.svg?branch=master)](https://travis-ci.org/pocke/rubocop-rails-order_model_declarative_methods)
 
 
