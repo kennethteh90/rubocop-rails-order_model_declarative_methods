@@ -2,37 +2,97 @@
 
 [![Build Status](https://travis-ci.org/pocke/rubocop-rails-order_model_declarative_methods.svg?branch=master)](https://travis-ci.org/pocke/rubocop-rails-order_model_declarative_methods)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubocop/rails/order_model_declarative_methods`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+Sort declarative methods of Rails model, as an extension to [RuboCop](https://github.com/bbatsov/rubocop).
+
+## What's this?
+
+### Bad code
+
+```ruby
+class User < ActiveRecord::Base
+  belongs_to :plan
+  validate :validate_name
+  after_create :after_create_1
+  has_many :messages
+  attr_readonly :email
+  after_create :after_create_2
+  belongs_to :role
+  before_create :set_name
+end
+```
+
+Declarative methods are not sorted...
+
+
+### Run `rubocop --auto-correct`
+
+```ruby
+class User < ActiveRecord::Base
+  belongs_to :plan
+  belongs_to :role
+  has_many :messages
+
+  validate :validate_name
+  before_create :set_name
+  after_create :after_create_1
+  after_create :after_create_2
+
+  attr_readonly :email
+
+end
+```
+
+- Group by `associations`, `callbacks`, and others.
+- Sort by execution order if it's callback method.
+
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Just install the `rubocop-rails-order_model_declarative_methods` gem.
+
+```sh
+gem install rubocop-rails-order_model_declarative_methods
+```
+
+or if you use `bundler` put this in your `Gemfile`.
 
 ```ruby
 gem 'rubocop-rails-order_model_declarative_methods'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rubocop-rails-order_model_declarative_methods
 
 ## Usage
 
-TODO: Write usage instructions here
+### RuboCop configuration file
 
-## Development
+Put this into your `.rubocop.yml`.
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```yaml
+require: rubocop-rails-order_model_declarative_methods
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+### Command line
+
+```sh
+rubocop --require rubocop-rails-order_model_declarative_methods
+```
+
+### Rake task
+
+```ruby
+RuboCop::RakeTask.new do |task|
+  task.requires << 'rubocop-rails-order_model_declarative_methods'
+end
+```
+
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/pocke/rubocop-rails-order_model_declarative_methods.
-
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
