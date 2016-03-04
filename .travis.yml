@@ -4,7 +4,6 @@ rvm:
   - 2.1.8
   - 2.2.4
   - 2.3.0
-  - head
 
 cache: bundler
 bundler_args: --jobs=4 --retry=3
@@ -16,3 +15,6 @@ env:
 
 before_script:
   - 'git clone --depth 1 https://github.com/bbatsov/rubocop ~/rubocop'
+
+script:
+  - 'bundle exec rspec'
