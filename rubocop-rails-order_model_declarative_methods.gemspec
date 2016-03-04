@@ -29,6 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rubocop', '0.37.2'
 
   spec.add_development_dependency "bundler", "~> 1.11"
+  # simplecov is needed by rubocop test support script.
+  spec.add_development_dependency "simplecov", "~> 0.11.2"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.4.0"
   spec.add_development_dependency "guard", "~> 2.13.0"
