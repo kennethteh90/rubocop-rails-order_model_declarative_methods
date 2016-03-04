@@ -8,7 +8,7 @@ unless File.directory?(rubocop_path)
   raise "#{rubocop_path} is not directory"
 end
 
-Dir["#{rubocop_path}/spec/support/**/*.rb"].each { |f| require f }
+Dir["#{rubocop_path}/spec/support/**/*.rb"].each { |f| require f unless f.end_with? 'coverage.rb'}
 
 RSpec.configure do |config|
   config.order = :random
