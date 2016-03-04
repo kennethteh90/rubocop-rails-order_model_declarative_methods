@@ -99,8 +99,12 @@ end
 5. Create new Pull Request
 
 
-License
--------
+## Links
+
+- [Rails のモデル内のメソッドをソートするRubocop Extension を作った - pockestrap](http://pocke.hatenablog.com/entry/2016/03/04/232425) (Japanese Blog)
+
+
+## License
 
 These codes are licensed under CC0.
 
