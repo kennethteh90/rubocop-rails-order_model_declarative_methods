@@ -49,14 +49,14 @@ module RuboCop
           return unless body.begin_type?
 
           targets = target_methods(body)
-          return if targets == sort_callbacks(targets)
+          return if targets == sort_methods(targets)
 
           add_offense(body, :expression)
         end
 
         def autocorrect(body)
           targets = target_methods(body)
-          sorteds = sort_callbacks(targets)
+          sorteds = sort_methods(targets)
           sorteds.push(nil)
 
           lambda do |corrector|
@@ -101,7 +101,7 @@ module RuboCop
         end
 
         # TODO: Rename
-        def sort_callbacks(callbacks)
+        def sort_methods(callbacks)
           i = 0
           callbacks.sort_by{|x| [target_method_names.find_index(x.method_name), i+=1]}
         end
