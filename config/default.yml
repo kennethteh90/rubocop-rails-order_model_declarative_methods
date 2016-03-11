@@ -1,5 +1,5 @@
 Rails/OrderModelDeclarativeMethods:
-  Description: 'TODO'
+  Description: 'Sort declarative methods of Rails model'
   Enabled: true
   Include:
     - app/models/**/*.rb
