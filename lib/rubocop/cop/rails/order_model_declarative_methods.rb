@@ -1,7 +1,9 @@
 module RuboCop
   module Cop
     module Rails
-      class OrderModelDeclarativeMethods < Cop
+      class OrderModelDeclarativeMethods < Base
+        extend AutoCorrector
+
         MSG = "not sorted"
 
         Associations = %i[
@@ -51,7 +53,36 @@ module RuboCop
           targets = target_methods(body)
           return if targets == sort_methods(targets)
 
-          add_offense(body)
+          targets = target_methods(body)
+          sorteds = sort_methods(targets)
+          sorteds.push(nil)
+
+          add_offense(node.loc.expression, message: 'Model not sorted') do |corrector|
+            sorteds.each_cons(2).with_index do |(sorted, next_sorted), idx|
+              target = targets[idx]
+              expr = target.loc.expression
+              corrector.replace(
+                expr,
+                sorted.loc.expression.source.to_s
+              )
+
+              lnum = expr.last_line
+              loop do
+                l = processed_source.lines[lnum]
+                break if l !~ /\A[[:space:]]*\z/ # blank
+
+                range = source_range(expr.source_buffer, lnum+1, 0, l.size+1)
+                corrector.remove(range)
+                lnum += 1
+              end
+
+              if next_sorted
+                corrector.insert_after(expr, "\n") if method_type(sorted) != method_type(next_sorted)
+              else
+                corrector.insert_after(expr, "\n")
+              end
+            end
+          end
         end
 
         def autocorrect(body)
