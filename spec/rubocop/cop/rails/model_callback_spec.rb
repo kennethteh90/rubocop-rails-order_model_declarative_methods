@@ -1,17 +1,24 @@
 require 'spec_helper'
 
-describe RuboCop::Cop::Rails::OrderModelDeclarativeMethods do
+RSpec.describe RuboCop::Cop::Rails::OrderModelDeclarativeMethods do
   subject(:cop) { described_class.new }
 
-  it '' do
-    inspect_source(cop, [
-      'class Foo',
-      '  after_create :hoge',
-      '  before_create :fuga',
-      'end',
-    ])
-    expect(cop.messages).to eq ['not sorted']
-    # expect(cop.highlights).to eq(['']) # TODO
-    expect(cop.offenses.map(&:line).sort).to eq([2])
+  it 'flags a model whose declarative methods are not sorted' do
+    expect_offense(<<-RUBY)
+      class User < ApplicationRecord
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not sorted
+        has_many :foos
+        belongs_to :bar
+      end
+    RUBY
+  end
+
+  it 'does not flag a model whose declarative methods are sorted' do
+    expect_no_offenses(<<-RUBY)
+      class User < ApplicationRecord
+        belongs_to :bar
+        has_many :foos
+      end
+    RUBY
   end
 end
