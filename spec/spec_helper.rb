@@ -3,13 +3,7 @@
 # frozen_string_literal: true
 
 require 'rubocop'
-
 require 'rubocop/rspec/support'
-
-if ENV['COVERAGE'] == 'true'
-  require 'simplecov'
-  SimpleCov.start
-end
 
 module SpecHelper
   ROOT = Pathname.new(__dir__).parent.freeze

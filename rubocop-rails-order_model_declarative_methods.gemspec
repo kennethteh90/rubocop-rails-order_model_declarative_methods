@@ -29,5 +29,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-bundler", "~> 2.1.0"
   spec.add_development_dependency "guard-rspec", "~> 4.6.4"
   spec.add_development_dependency "guard-rake", "~> 1.0.0"
-  spec.add_development_dependency "pry"
 end
