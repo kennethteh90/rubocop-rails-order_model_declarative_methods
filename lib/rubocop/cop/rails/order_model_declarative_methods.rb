@@ -51,7 +51,7 @@ module RuboCop
           targets = target_methods(body)
           return if targets == sort_methods(targets)
 
-          add_offense(body, :expression)
+          add_offense(body)
         end
 
         def autocorrect(body)
