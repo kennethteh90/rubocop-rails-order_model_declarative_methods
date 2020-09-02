@@ -4,9 +4,10 @@
 module RuboCop
   # RuboCop RSpec project namespace
   module RSpec
-    PROJECT_ROOT   = Pathname.new(__dir__).parent.parent.expand_path.freeze
-    CONFIG_DEFAULT = PROJECT_ROOT.join('config', 'default.yml').freeze
-    CONFIG         = YAML.safe_load(CONFIG_DEFAULT.read).freeze
+    GEM_SPEC = Gem::Specification.find_by_name('rubocop-rails-order_model_declarative_methods')
+    PROJECT_ROOT = GEM_SPEC.gem_dir
+    CONFIG_DEFAULT = File.join(PROJECT_ROOT, 'config', 'default.yml').freeze
+    CONFIG         = YAML.safe_load(CONFIG_DEFAULT).freeze
 
     private_constant(:CONFIG_DEFAULT, :PROJECT_ROOT)
   end
