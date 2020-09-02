@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # This file is copied from rubocop-rspec
 
+require 'yaml'
+
 module RuboCop
   # RuboCop RSpec project namespace
   module RSpec
